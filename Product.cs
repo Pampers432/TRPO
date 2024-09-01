@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Классы_в_курсовой
+﻿namespace Классы_в_курсовой
 {
     abstract class Product
     {
-        protected string Size { get; set; }
+        protected string size { get; set; }
 
-        protected string Price { get; set; }
+        protected string price { get; set; }
+
+        //protected void DisplayData(Product product)
+        //{
+        //    Console.WriteLine($"Window: {product.Size}, Price: {product.Price}");
+        //}
 
         //public void AddElement()
         //{

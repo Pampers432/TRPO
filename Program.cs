@@ -4,17 +4,34 @@
     {
 
         private static void Main(string[] args)
-        {
-            SQLDoor SQLdoor1 = new SQLDoor("2000x600мм", "230");
-            SQLDoor SQLdoor2 = new SQLDoor("2000x700мм", "245");
-            SQLDoor SQLdoor3 = new SQLDoor("2000x800мм", "256");
-            SQLDoor SQLdoor4 = new SQLDoor("2000x900мм", "268");
+        {   
+            //SQLDoors List
+            List<SQLDoor> SQLDoors = new List<SQLDoor>();
+            
+            string[] DoorSizes = { "2000x600мм", "2000x700мм", "2000x800мм", "2000x900мм" };
+            string[] DoorPrices = { "230", "245", "256", "268" };
 
-            SQLWindow SQLwindow1 = new SQLWindow("1170х1440мм", "523");
-            SQLWindow SQLwindow2 = new SQLWindow("1310х1430мм", "545");
-            SQLWindow SQLwindow3 = new SQLWindow("1320х1330мм", "526");
-            SQLWindow SQLwindow4 = new SQLWindow("1470х1400мм", "570");
-            SQLWindow SQLwindow5 = new SQLWindow("1770х1430мм", "822");
+            for (int i = 0; i < DoorSizes.Length; i++)
+            {
+                SQLDoors.Add(new SQLDoor(DoorSizes[i], DoorPrices[i]));
+            }
+
+            //SQLWindows List
+            List<SQLWindow> SQLWindows = new List<SQLWindow>();
+
+            string[] WindowSizes = { "1170х1440мм", "1310х1430мм", "1320х1330мм", "1470х1400мм", "1770х1430мм" };
+            string[] WindowPrices = { "523", "545", "526", "570", "822" };
+
+            for (int i = 0;i < WindowSizes.Length; i++)
+            {
+                SQLWindows.Add(new SQLWindow(WindowSizes[i], WindowPrices[i]));
+            }
+
+            //DoorsToOrder List
+            List<DoorToOrder> DoorsToOrder = new List<DoorToOrder>();
+
+            //WindowsToOrder List
+            List<WindowToOrder> WindowsToOrder = new List<WindowToOrder>();
 
         }
     }
