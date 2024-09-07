@@ -1,0 +1,16 @@
+﻿
+
+
+
+
+    <h1>Все двери</h1>
+    <h3>@Model.doorCategory</h3>
+    @{
+        foreach (var door in Model.allDoors)
+        {
+            <div>
+                <h2>Размер: @door.size</h2>
+                <p>Цена: @door.price.ToString("c")</p>
+            </div>
+        }
+    }
