@@ -1,0 +1,28 @@
+﻿@using TestShop.ViewModels
+@model DoorsListViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List</title>
+</head>
+<body>
+    <h1>Все двери</h1>
+    <h3>@Model.doorCategory</h3>
+    @{
+        foreach (var door in Model.allDoors)
+        {
+            <div>
+                <h2>Размер: @door.size</h2>
+                <p>Цена: @door.price.ToString("c")</p>
+            </div>
+        }
+    }
+</body>
+</html>
