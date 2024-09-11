@@ -1,41 +1,54 @@
-п»їnamespace РљР»Р°СЃСЃС‹_РІ_РєСѓСЂСЃРѕРІРѕР№
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using TestShop.Data;
+using TestShop.Data.intarfaces;
+using TestShop.Data.mocks;
+using TestShop.Data.Reposiroty;
+
+namespace TestShop
 {
-    class Programm
+    public class Program
     {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
 
-        private static void Main(string[] args)
-        {   
-            //SQLDoors List
-            List<SQLDoor> SQLDoors = new List<SQLDoor>();
-            
-            string[] DoorSizes = { "2000x600РјРј", "2000x700РјРј", "2000x800РјРј", "2000x900РјРј" };
-            string[] DoorPrices = { "230", "245", "256", "268" };
+            // Добавление сервисов в контейнер
+            builder.Services.AddScoped<IDoor, MockDoor>();
+            builder.Services.AddScoped<IWindow, MockWindow>();//Потом создать репозиторий
+            builder.Services.AddScoped<ICategory, MockCategory>();
 
-            for (int i = 0; i < DoorSizes.Length; i++)
+            // Добавление конфигурации из файла dbsettings.json
+            builder.Configuration.AddJsonFile("dbsettings.json", optional: true, reloadOnChange: true);
+
+            // Настройка DbContext
+            builder.Services.AddDbContext<AppDBContent>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            // Add services for controllers and views
+            builder.Services.AddControllersWithViews();
+
+            var app = builder.Build();
+
+            // Настройка промежуточного ПО
+            if (!app.Environment.IsDevelopment())
             {
-                SQLDoors.Add(new SQLDoor(DoorSizes[i], DoorPrices[i]));
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
             }
 
-            //SQLWindows List
-            List<SQLWindow> SQLWindows = new List<SQLWindow>();
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseRouting();
+            app.UseAuthorization();
 
-            string[] WindowSizes = { "1170С…1440РјРј", "1310С…1430РјРј", "1320С…1330РјРј", "1470С…1400РјРј", "1770С…1430РјРј" };
-            string[] WindowPrices = { "523", "545", "526", "570", "822" };
+            // Map default controller route
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Doors}/{action=List}/{id?}");
 
-            for (int i = 0;i < WindowSizes.Length; i++)
-            {
-                SQLWindows.Add(new SQLWindow(WindowSizes[i], WindowPrices[i]));
-            }
-
-            //DoorsToOrder List
-            List<DoorToOrder> DoorsToOrder = new List<DoorToOrder>();
-
-            //WindowsToOrder List
-            List<WindowToOrder> WindowsToOrder = new List<WindowToOrder>();
-
+            app.Run();
         }
     }
 }
-
-
-
